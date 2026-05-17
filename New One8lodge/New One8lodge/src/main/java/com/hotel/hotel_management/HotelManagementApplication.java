@@ -1,0 +1,28 @@
+ package com.hotel.hotel_management;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+
+@SpringBootApplication
+@EnableScheduling
+public class HotelManagementApplication{
+
+	
+	
+	public static void main(String[] args) {
+		SpringApplication.run(HotelManagementApplication.class, args);
+		
+		System.out.println("WELCOME TO ONE 8 LODGE SERVICESS");
+	}
+	
+	@Bean
+	public ModelMapper modelMapper() {	
+		return new ModelMapper();
+	}
+
+}

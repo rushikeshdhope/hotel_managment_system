@@ -1,0 +1,264 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+header, footer {
+  width: 100%;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+
+main {
+  margin-top: 60px; /* Adjust this value based on your header height */
+  margin-bottom: 60px; /* Adjust this value based on your footer height */
+}
+
+.bookings-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0; /* Adding padding to the top and bottom */
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.bookings-content {
+  padding: 20px;
+  background-color: #fff;
+  margin-top: 62px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.pending-message {
+  color: #ff9800; 
+  font-style: italic;
+  margin-top: 10px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.bookings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+hr{
+  margin: 0;
+}
+
+marquee{
+  color: green;
+}
+
+.booking-card {
+  position: relative; /* Needed for absolute positioning of badge */
+  background-color: #efeded;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.booking-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.card-content h3 {
+  /* font-size: 2.5rem; */
+  margin-top: 0;
+}
+
+.card-content p {
+  margin: 0;
+  /* font-size: 21px; */
+}
+
+.status-badge-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.badge-warning, .badge-success, .badge-danger, .badge-Info {
+  padding: 5px 10px;
+  border-radius: 12px;
+  color: white;
+  display: inline-block;
+}
+
+.badge-warning {
+  background-color: #ffc107;
+}
+
+.badge-success {
+  background-color: #28a745;
+}
+
+.badge-danger {
+  background-color: #dc3545;
+}
+
+.badge-Info {
+  background-color: #17a2b8;
+}
+
+.message-card {
+  text-align: center;
+  padding: 20px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .bookings-container {
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .bookings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* .card-content h3 {
+    font-size: 1.2rem;
+  }
+
+  .card-content p {
+    font-size: 0.9rem;
+  } */
+
+  .status-badge-container {
+    top: 5px;
+    right: 5px;
+  }
+
+  .badge-warning, .badge-success, .badge-danger, .badge-Info {
+    padding: 4px 8px;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .bookings-container {
+    width: 100%;
+    padding: 5px 0;
+  }
+
+  .bookings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* .card-content h3 {
+    font-size: 24px;
+  } */
+
+  /* .card-content p {
+    font-size: 18px;
+  } */
+
+  .status-badge-container {
+    top: 5px;
+    right: 5px;
+  }
+
+  .badge-warning, .badge-success, .badge-danger, .badge-Info {
+    padding: 3px 6px;
+    border-radius: 8px;
+  }
+}
+
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 50vw; 
+  height: 50vh; 
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.modal-content form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-content input[type="tel"] {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-content button[type="submit"] {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal-content button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+form {
+  max-width: 800px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  backdrop-filter: blur(0px) saturate(180%);
+  -webkit-backdrop-filter: blur(0px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0.81);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}

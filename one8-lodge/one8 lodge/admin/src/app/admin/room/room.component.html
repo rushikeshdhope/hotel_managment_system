@@ -1,0 +1,37 @@
+<div class="navbar">
+    <i class="bi bi-arrow-90deg-left" routerLink="/adminDashboardRoute" ></i>
+    <h1>Room Catagory </h1>
+    <button (click)="ClickAddRoom()">Add Room Category</button>
+</div>
+
+<div class="NewRoomContainer" *ngIf="AddNewRoomContainer">
+    <input type="text" [(ngModel)]="NewroomName" placeholder="Enter new room type .." pattern="[a-zA-Z]*" maxlength="30">
+    <div *ngIf="NewroomName && !isValidRoomNewName()" class="text-danger">Only alphabetic characters allowed.</div>
+<button (click)="NewRoom()" [disabled]="!isValidRoomNewName()">Save</button>
+</div>
+
+<table>
+    <tr>
+        <th>Room ID</th>
+        <th>Room Type</th>
+        <th> Action </th>
+    </tr>
+    <tr *ngIf="RoomArray === null">
+        <td colspan="3" style="text-align:center">No record found</td>
+    </tr>
+    <tr *ngFor="let data of RoomArray; let i = index">
+        <td>{{ data.room_category_id }}</td>
+        <td *ngIf="!editMode || editRowIndex !== i">{{ data.room_category_name}}</td>
+        <td *ngIf="editMode && editRowIndex === i">
+            <input type="text" [(ngModel)]="roomName" pattern="[a-zA-Z]*" maxlength="30">
+            <div *ngIf="!isValidRoomName()" class="text-danger">Only alphabetic characters allowed.</div>
+<button (click)="EditRoomName(data)" [disabled]="!isValidRoomName()">Save</button>
+            
+          </td>
+        
+        
+        <td><i class="bi bi-pencil-square" (click)="EditRoom(i,data.room_category_name)"></i>
+            <i class="bi bi-trash3" (click)="DeleteRoom(data.room_category_id)"></i>
+        <a (click)="navigateRoomDetail(data.room_category_id)">view or add room</a></td>
+    </tr>
+</table>

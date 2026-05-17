@@ -1,0 +1,182 @@
+.nav1 {
+  backdrop-filter: blur(4px) saturate(200%);
+  -webkit-backdrop-filter: blur(4px) saturate(200%);
+  background-color: rgba(0, 0, 0, 0.54);
+  z-index: 1010;
+  padding: 0;
+}
+
+.margib {
+  margin-bottom: 0;
+  border: 0;
+}
+
+.hove a {
+  background-color: white;
+}
+
+.hove a:hover {
+  background-color: #FF7400;
+}
+
+.bgc1 {
+  background-color: black;
+}
+
+.colo1 {
+  color: white;
+}
+
+.img2 {
+  height: 45px;
+  margin-left: 30px;
+  background-color: white;
+  border-radius: 15px
+}
+
+.offcanvas-body {
+  padding-top: 0;
+}
+
+.offcanvas {
+  padding: 10px;
+}
+
+.navbar-wrapper {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 2000;
+  transition: top 0.3s;
+}
+
+.navbar-wrapper.scrolled-down {
+  top: -100px;
+}
+
+.img-hw {
+  height: 30px;
+  width: 30px;
+}
+
+.img1 {
+  height: 50px;
+  background-color: white;
+  border-radius: 15px;
+  /* margin-left: 50px; */
+}
+
+.flex1 {
+  justify-content: center;
+}
+
+.text-focus-in {
+  -webkit-animation: text-focus-in 1.5s linear 1s both;
+  animation: text-focus-in 1.5s linear 1s both
+}
+
+@-webkit-keyframes text-focus-in {
+  0% {
+    -webkit-filter: blur(12px);
+    filter: blur(12px);
+    opacity: 0
+  }
+
+  100% {
+    -webkit-filter: blur(0);
+    filter: blur(0);
+    opacity: 1
+  }
+}
+
+@keyframes text-focus-in {
+  0% {
+    -webkit-filter: blur(12px);
+    filter: blur(12px);
+    opacity: 0
+  }
+
+  100% {
+    -webkit-filter: blur(0);
+    filter: blur(0);
+    opacity: 1
+  }
+}
+
+
+.btn1 {
+  /* font-size: 17px; */
+  background: transparent;
+  border: none;
+  /* padding: 1em 1.5em; */
+  color: #ffedd3;
+  text-transform: uppercase;
+  position: relative;
+  transition: 0.5s ease;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn1::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-color: #FF7400;
+  transition: 0.5s ease;
+}
+
+.btn1:hover {
+  color: #1e1e2b;
+  transition-delay: 0.5s;
+}
+
+.btn1:hover::before {
+  width: 100%;
+}
+
+.btn1::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 0;
+  width: 100%;
+  background-color: #FF7400;
+  transition: 0.4s ease;
+  z-index: -1;
+}
+
+.btn1:hover::after {
+  height: 100%;
+  transition-delay: 0.4s;
+  color: aliceblue;
+}
+
+.icon2 {
+  display: none;
+}
+
+.btn1:hover .icon2 {
+  display: inline-block;
+}
+
+.btn1:hover .icon1 {
+  display: none;
+}
+
+
+.active-link {
+  background-color: #FF6600;
+  color: white;
+  border-radius: 10px;
+}
+
+
+@media (min-width:768px) {}
+
+@media (min-width:1024px) {}
+
+@media (min-width:1440px) {}

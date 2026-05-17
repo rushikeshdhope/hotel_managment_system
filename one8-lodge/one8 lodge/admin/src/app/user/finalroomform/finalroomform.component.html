@@ -1,0 +1,137 @@
+<div class="navbar">
+  <i class="bi bi-arrow-90deg-left" routerLink="/bookings"></i>
+  <h1>ROOM BOOK FORM</h1>
+</div>
+
+<section class="margi">
+  <div *ngFor="let data of customerRoomArray" class="customer-container">
+    <!-- Customer Details -->
+    <h2>Order Details</h2>
+    <table class="order-table">
+      <thead>
+        <tr>
+          <th>Order No</th>
+          <th>In Time</th>
+          <!-- <th>Out Time</th> -->
+          <th>Room Number</th>
+          <th>Duration</th>
+          <th>AC</th>
+          <th>Amount</th>
+          <th>Customer Name</th>
+          <th>Customer No</th>
+          <th>Customer Mob.No</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="data.order1dto.roomDetails">
+          <td>{{ data.order1dto.order_no }}</td>
+          <td>{{ data.order1dto.intime }}</td>
+          <!-- <td>{{ data.order1dto.outtime }}</td> -->
+          <td>{{ data.order1dto.roomDetails.room_number }}</td>
+          <td>{{ data.order1dto.roomDetails.duration }}</td>
+          <td>{{ data.order1dto.roomDetails.is_ac ? "Yes" : "No" }}</td>
+          <td>{{ data.order1dto.roomDetails.amount }}</td>
+          <td>{{ data.customers1Dto.customer_name }}</td>
+          <td>{{ data.customers1Dto.customer_no }}</td>
+          <td>{{ data.customers1Dto.customer_mobile }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="food-selection">
+
+     <div> <input type="text" class="animated-input" placeholder="Enter Food Name .." (input)="getOrderMob($event)">
+      <ul>
+        <li *ngFor="let data of SearchedArray"  [ngClass]="{'selected-food': data.food_id === selectedFoodId}" class="food-item" (click)="onSubCategorySelected(data.food_id)" >{{data.food_name}}</li>
+      </ul>
+    </div>
+
+      <!-- <select (change)="onCategorySelected($event)">
+        <option>select food category</option>
+        <option
+          *ngFor="let category of FoodArray"
+          [value]="category.food_category_id"
+        >
+          {{ category.food_category_name }}
+        </option>
+      </select>
+
+      <select (change)="onSubCategorySelected($event)">
+        <option>select food subcategory</option>
+        <option
+          *ngFor="let subCategory of FoodSubCatArray"
+          [value]="subCategory.food_id"
+        >
+          {{ subCategory.food_name }}
+        </option>
+      </select> -->
+
+
+<div>
+      <input
+        type="number"
+        id="count"
+        [(ngModel)]="quantity"
+        placeholder="Quantity"
+      />
+
+      <button (click)="addFoodItem()">Add Food Item</button>
+    </div>
+    </div>
+
+    <div class="selected-food-items" *ngIf="selectedFoodItems.length > 0">
+      <h4>Selected Food Items:</h4>
+      <table class="selected-food-table">
+        <thead>
+          <tr>
+            <th>Food Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of selectedFoodItems; let i = index">
+            <td>{{ item.food_name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.rate }}</td>
+            <td>{{ item.total_rate }}</td>
+            <td><button (click)="removeFoodItem(i)">Remove</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <button
+        class="submit-order-button"
+        (click)="submitOrder(data.order1dto.order_id)"
+      >
+        Submit Order
+      </button>
+    </div>
+
+    <div class="food-details">
+      <h1>Food</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Food Name</th>
+            <th>Food Quantity</th>
+
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let room of data.order1dto.foodDetails">
+            <td>{{ room.food_name }}</td>
+            <td>{{ room.quantity }}</td>
+
+            <td>{{ room.amount }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

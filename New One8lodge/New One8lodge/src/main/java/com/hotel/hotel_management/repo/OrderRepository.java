@@ -1,0 +1,179 @@
+package com.hotel.hotel_management.repo;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.hotel.hotel_management.dtos.AllRoomSaleDTO;
+import com.hotel.hotel_management.dtos.RelatedCustomerDTO;
+import com.hotel.hotel_management.dtos.RoomSaleDetail;
+import com.hotel.hotel_management.model.Order;
+import com.hotel.hotel_management.model.Room;
+import com.hotel.hotel_management.utility.OrderStatus;
+import com.hotel.hotel_management.utility.PaymentType;
+import com.hotel.hotel_management.utility.RoomStatus;
+
+@Repository
+public interface OrderRepository extends JpaRepository<Order, Long> {
+
+	@Query(value = "select * from room where room_number = ?", nativeQuery = true)
+	public Optional<Room> getRoomByRoomNumber(Long roomNumber);
+
+	@Query(value = "SELECT rd.room_number FROM orders o JOIN room_detail rd ON o.roomdetail_id = rd.roomdetail_id WHERE o.outtime = :outtime AND o.booking_date = :date AND o.order_status = 0", nativeQuery = true)
+	public List<Long> getRoomIdForNotification(@Param("outtime") String outtime, @Param("date") String date);
+
+	@Query(value = "SELECT COUNT(*) " + "FROM orders o " + "JOIN room_detail rd ON o.roomdetail_id = rd.roomdetail_id "
+			+ "WHERE rd.room_number = :roomNumber " + "AND o.booking_date = :date "
+			+ "AND (:intime BETWEEN o.intime AND o.outtime " + "OR :outtime BETWEEN o.intime AND o.outtime "
+			+ "OR o.intime BETWEEN :intime AND :outtime "
+			+ "OR o.outtime BETWEEN :intime AND :outtime)", nativeQuery = true)
+	public long checkRoomAvailableOrNot(@Param("intime") String intime, @Param("outtime") String outtime,
+			@Param("date") String date, @Param("roomNumber") String roomNumber);
+
+	// 1 mean room engage
+
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE room SET room_status = :roomStatus WHERE room_number = :roomNumber", nativeQuery = true)
+	public void updateRoomStatusUsingRoomNo(@Param("roomStatus") RoomStatus roomStatus,
+			@Param("roomNumber") Long roomNumber);
+
+	@Query(value = "SELECT rd.room_number FROM orders o JOIN room_detail rd ON o.roomdetail_id = rd.roomdetail_id WHERE o.booking_date = :date ", nativeQuery = true)
+	public List<Long> getAvailableRoomOnDate(@Param("date") String date);
+
+//	@Query(value = "SELECT o.intime, o.outtime FROM orders o JOIN room_detail r ON o.roomdetail_id = r.roomdetail_id WHERE o.date = :date AND r.room_number = :roomNumber", nativeQuery = true)
+//	List<TimeDTO> findIntimeAndOuttimeByDateAndRoomNumber(@Param("date") String date,
+//			@Param("roomNumber") String roomNumber);
+
+	@Query(value = "SELECT o.intime, o.outtime " +
+            "FROM orders o " +
+            "JOIN room_detail r ON o.roomdetail_id = r.roomdetail_id " +
+            "WHERE o.booking_date = :date " +
+            "AND r.room_number = :roomNumber " +
+            "AND (o.order_status = 0 OR o.order_status = 4 OR o.order_status = 5)", 
+    nativeQuery = true)	List<Object[]> findIntimeAndOuttimeByDateAndRoomNumberNative(@Param("date") String date, @Param("roomNumber") String roomNumber);
+
+	
+	@Query(value = "select * from orders where customers_id = ?", nativeQuery = true)
+	public List<Order> getAllOrderByCustomerId(Long customerId);
+	
+//    @Query(value = "SELECT o.* FROM orders o JOIN customers c ON o.customers_id = c.customer_id WHERE c.customer_mobile LIKE :mobileNo%", nativeQuery = true)
+	
+	@Query(value =  "SELECT o.*, c.customer_name, c.customer_mobile, rc.name " +
+                  "FROM orders o " +
+                  "JOIN customers c ON o.customers_id = c.customer_id " +
+                  "JOIN related_customer rc ON o.related_customer_id = rc.related_customer_id " +
+                  "WHERE LOWER(c.customer_name) LIKE LOWER(CONCAT('%', :parameter, '%')) " +
+                  "   OR c.customer_mobile LIKE CONCAT('%', :parameter, '%') " +
+                  "   OR LOWER(rc.name) LIKE LOWER(CONCAT('%', :parameter, '%'))" ,nativeQuery = true)
+    List<Order> getAllByCustomerInfo(@Param("parameter") String mobileNo);
+
+
+//    @Query(value = "SELECT o.order_id FROM orders o JOIN room_detail rd ON o.roomdetail_id = rd.roomdetail_id JOIN room r ON rd.room_number = r.room_number WHERE r.room_number = :roomNumber AND r.room_status = :roomStatus ORDER BY o.order_id DESC LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT o.order_id FROM orders o JOIN room_detail rd ON o.roomdetail_id = rd.roomdetail_id JOIN room r ON rd.room_number = r.room_number WHERE r.room_number = :roomNumber AND r.room_status = :roomStatus ORDER BY o.order_id DESC LIMIT 1", nativeQuery = true)
+    public   Long findCustomersByDateRoomNumberAndTime(
+                                                @Param("roomNumber") String roomNumber,
+                                                @Param("roomStatus") RoomStatus roomStatus);
+   
+    
+    @Query(value = "SELECT SUM(o.total_amount) " +
+            "FROM orders o " +
+            "JOIN orders_payments op ON o.order_id = op.order_order_id " +
+            "JOIN payment p ON op.payments_payment_id = p.payment_id " +
+            "WHERE TO_CHAR(o.booking_date, 'YYYY-MM') = :monthYear " +
+            "AND o.order_status = 3 " +
+            "AND (:type IS NULL OR p.type = :type)",nativeQuery = true)
+	public Long getTheMonthWiseSale(@Param("monthYear") String monthYear, @Param("type") PaymentType paymentType);
+
+//	@Query(value = "SELECT TO_CHAR(CAST(date AS DATE), 'YYYY') AS year, SUM(total_amount) AS totalSale "
+//			+ "FROM orders " + "WHERE order_status = 3 AND TO_CHAR(CAST(date AS DATE), 'YYYY') = :year "
+//			+ "GROUP BY year " + "ORDER BY year", nativeQuery = true)
+    
+    @Query(value = "SELECT SUM(o.total_amount) " +
+            "FROM orders o " +
+            "JOIN orders_payments op ON o.order_id = op.order_order_id " +
+            "JOIN payment p ON op.payments_payment_id = p.payment_id " +
+            "WHERE EXTRACT(YEAR FROM o.booking_date) = :year " +
+            "AND o.order_status = 3 " +
+            "AND (:type IS NULL OR p.type = :type)", nativeQuery = true)
+    public Long getTheYearWiseSale(@Param("year") String year, @Param("type") PaymentType paymentType);
+	
+	@Query(value = "SELECT * FROM orders WHERE order_status = :orderStatus ORDER BY modified_time DESC", nativeQuery = true)
+	public Page<Order> getAllOrderStatusIn(@Param("orderStatus") OrderStatus orderStatus,Pageable pageable);
+	
+	@Query(value = "SELECT * FROM orders ORDER BY order_id DESC",nativeQuery = true)
+	public Page<Order> findAllOrders(Pageable pageable);
+
+	@Query(value = "SELECT * FROM orders c ORDER BY c.order_no DESC LIMIT 1", nativeQuery = true)
+	Optional<Order> findTopByOrderByBookingIdDesc();
+	
+	@Query(value = "select customers_id from orders where order_id = ?", nativeQuery = true)
+	public Long getCustomerIdByOrder(Long orderId);
+
+	@Query(value = "SELECT SUM(o.total_amount) FROM orders o JOIN orders_payments op ON o.order_id = op.order_order_id JOIN payment p ON op.payments_payment_id = p.payment_id WHERE o.booking_date = :bookingDate AND o.order_status = '3'  AND (:paymentType IS NULL OR p.type = :paymentType)",nativeQuery = true)
+    public Long getSaleOnBookingDate(@Param("bookingDate") String bookingDate, @Param("paymentType") PaymentType paymentType);
+
+	@Query(value = "select * from orders where booking_date = ?", nativeQuery = true)
+	public List<Order> getAllOrderByBookingDate(String bookingDate);
+	
+	 @Query(value = "SELECT " +
+             "SUM(COALESCE(o.paid_room_amount, 0)) AS total_paid_room_amount, " +
+             "COUNT(r.room_number) AS room_number_count " +
+             "FROM orders o " +
+             "JOIN room_detail r ON o.roomdetail_id = r.roomdetail_id " +
+             "WHERE DATE(o.booking_date) = :bookingDate " +
+             "AND r.room_number = :roomNumber " +
+             "AND o.order_status = '3'", 
+     nativeQuery = true)
+     public List<Object[]> getTotalPaidRoomAmountAndRoomNumberCount(@Param("bookingDate") String bookingDate, 
+                                                @Param("roomNumber") String roomNumber);
+    
+//     @Query(value = "SELECT rd.room_number, " +
+//             "SUM(CASE WHEN p.type = '0' THEN o.total_amount ELSE 0 END) AS cash_total, " +
+//             "SUM(CASE WHEN p.type = '2' THEN o.total_amount ELSE 0 END) AS online_total, " +
+//             "SUM(o.total_amount) AS total_amount " +
+//             "FROM orders o " +
+//             "JOIN orders_payments op ON o.order_id = op.order_order_id " +
+//             "JOIN payment p ON op.payments_payment_id = p.payment_id " +
+//             "JOIN room_detail rd ON o.roomdetail_id = rd.roomdetail_id " +
+//             "WHERE o.booking_date = :bookingDate " +
+//             "AND o.order_status = '3' " +
+//             "GROUP BY rd.room_number", 
+//     nativeQuery = true)
+     
+     @Query(value = "SELECT " +
+             "r.room_number AS roomNumber, " +
+             "o.total_amount AS totalAmount, " +
+             "IFNULL(o.extra_amount, 0) AS extraAmount, " +
+             "IFNULL(o.advance_amount, 0) AS advanceAmount, " +
+             "r.amount AS roomAmount, " +
+             "IFNULL(p.cash_amount_total, 0) AS cashAmount, " +
+             "IFNULL(p.online_amount_total, 0) AS onlineAmount, " +
+             "COALESCE(SUM(COALESCE(f.amount, 0)), 0) AS foodAmount " +
+             "FROM room_detail r " +
+             "INNER JOIN orders o ON r.roomdetail_id = o.roomdetail_id " +
+             "INNER JOIN ( " +
+             "    SELECT " +
+             "    op.order_order_id, " +
+             "    SUM(CASE WHEN p.type = '0' THEN p.amount ELSE 0 END) AS cash_amount_total, " +
+             "    SUM(CASE WHEN p.type = '2' THEN p.amount ELSE 0 END) AS online_amount_total " +
+             "    FROM orders_payments op " +
+             "    INNER JOIN payment p ON op.payments_payment_id = p.payment_id " +
+             "    GROUP BY op.order_order_id " +
+             ") p ON o.order_id = p.order_order_id " +
+             "LEFT JOIN orders_food_details ofd ON o.order_id = ofd.order_order_id " +
+             "LEFT JOIN food_detail f ON ofd.food_details_food_detail_id = f.food_detail_id " +
+             "WHERE o.booking_date = :bookingDate AND o.order_status = 3 " +
+             "GROUP BY r.room_number, o.total_amount, o.extra_amount, o.advance_amount, r.amount, p.cash_amount_total, p.online_amount_total order by o.modified_time desc", 
+             nativeQuery = true)
+     public List<RoomSaleDetail> getTotalAmountsByBookingDate(@Param("bookingDate") String bookingDate);
+
+}

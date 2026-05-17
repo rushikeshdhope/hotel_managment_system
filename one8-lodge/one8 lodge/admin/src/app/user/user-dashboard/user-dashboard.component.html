@@ -1,0 +1,239 @@
+<div class="navbar">
+  <div><i class="bi bi-arrow-90deg-left" routerLink="/bookings"></i></div>
+
+  <div class="navbar-title">
+    <h1>MANAGER PANEL</h1>
+  </div>
+
+  <!-- <div class="notification-container pe-4">
+    <i class="bi bi-bell" routerLink="/notificatonRoute"></i>
+    <span class="notification-count">{{ notificationCount }}</span>
+  </div> -->
+</div>
+
+<div id="sidebar" [class.active]="isSidebarOpen">
+  <div class="logo">
+    <h1 class="ps-4">Manager</h1>
+    <span class="closebtn pe-4" (click)="closeNav()">&#10005;</span>
+  </div>
+  <ul class="nav-list">
+    <li><a routerLink="/customer">CUSTOMER</a></li>
+    <li><a routerLink="/userRoomRoute">ROOM MODIFICATION </a></li>
+    <li><a routerLink="/userFoodRoute">FOOD MODIFICATION</a></li>
+    <li><a routerLink="/SliderImagesRoute">SLIDER IMAGES</a></li>
+    <li><a routerLink="/login" (click)="service.logout()">LOG OUT</a></li>
+  </ul>
+</div>
+
+<div class="card-container">
+  <div class="card">
+    <label>TODAYS INCOME</label>
+    <button (click)="toggleViewshowDetailsTotal()" class="button-view">
+      {{ showDetailsTotal ? "Close" : "View" }}
+    </button>
+
+    <div *ngIf="showDetailsTotal">
+      <div *ngFor="let data of DayIncome">
+        <p>
+          <b>TOTAL</b> : {{ data.total_amount }}
+          <ng-container *ngIf="data.total_amount == null">0</ng-container>
+        </p>
+        <div class="row">
+          <p class="col-6">
+            <b>CASH</b> : {{ data.cash_amount }}
+            <ng-container *ngIf="data.cash_amount == null">0</ng-container>
+          </p>
+          <p class="col-6">
+            <b>ONLINE</b> : {{ data.online_amount }}
+            <ng-container *ngIf="data.online_amount == null">0</ng-container>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <label>DATE WISE TOTAL INCOME :</label>
+    <div>
+      <input
+        type="date"
+        style="color: black"
+        (input)="handleInputsDateIncome($event)"
+      />
+    </div>
+
+    <div *ngIf="isPosiVisible" class="posi">
+      <div class="text-end">
+        <button
+          (click)="closePosi()"
+          class="bg-dark text-light border-0 rounded-4"
+        >
+          x
+        </button>
+      </div>
+      <div *ngFor="let data of FilteredroomsIncome">
+        <p>
+          <b>TOTAL</b> : {{ data.total_amount
+          }}<ng-container *ngIf="data.total_amount == null">0</ng-container>
+        </p>
+        <p>
+          <b>CASH</b> : {{ data.cash_amount
+          }}<ng-container *ngIf="data.cash_amount == null">0</ng-container>
+        </p>
+        <p>
+          <b>ONLINE</b> : {{ data.online_amount
+          }}<ng-container *ngIf="data.online_amount == null">0</ng-container>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="card">
+    <label> DATE WISE ALL ROOMS INCOME :</label>
+    <div>
+      <input
+        type="date"
+        style="color: black"
+        (input)="handleInputsDateWiseRoomIncome($event)"
+      />
+    </div>
+
+    <div *ngIf="isPosiVisibleRoomWiseIncome" class="posi">
+      <div class="text-end posi1">
+        <button
+          (click)="closePosiAllRoom()"
+          class="bg-dark text-light border-0 rounded-4"
+        >
+          x
+        </button>
+      </div>
+
+      <p class="text-center fw-bold back2 mb-4 p-3">TODAYS ALL ROOM INCOME</p>
+      <table style="width: 100%" class="">
+        <tr *ngFor="let data of RoomWiseIncomeArray" class="border-bottom">
+          <td class="back1">
+            <p>Room No : {{ data.roomNumber }}</p>
+          </td>
+          <td>
+            <p>Online : {{ data.onlineAmount }}</p>
+          </td>
+          <td>
+            <p>Cash : {{ data.cashAmount }}</p>
+          </td>
+          <td>
+            <p>Discount : {{ data.advanceAmount }}</p>
+          </td>
+          <td>
+            <p>Extra Amount : {{ data.extraAmount }}</p>
+          </td>
+          <td>
+            <p>Hotel Income : {{ data.foodAmount }}</p>
+          </td>
+          <td>
+            <p>Room Income : {{ data.roomAmount }}</p>
+          </td>
+          <td>
+            <p>Total : {{ data.totalAmount }}</p>
+          </td>
+        </tr>
+        <tr *ngIf="!RoomWiseIncomeArray || RoomWiseIncomeArray.length === 0">
+          <td colspan="17">No records found</td>
+        </tr>
+      </table>
+    </div>
+  </div> -->
+
+</div>
+<div class="row m-4">
+  <div class="col-12 col-md-2 ps-md-4">
+    <div
+      class="p-4 hei"
+      style="background-color: #fdc9c9; flex: 1; border-radius: 20px"
+    >
+      <h3 style="text-align: center" class="pb-3"><b>ENGAGED ROOM</b></h3>
+      <h2
+        *ngIf="!engagedRooms || engagedRooms.length === 0"
+        class="no-room-message"
+      >
+        No room found
+      </h2>
+      <div class="room-grid-engaged">
+        <div *ngFor="let room of engagedRooms" class="room-container">
+          <p (click)="navigateFinalRoom(room.room_number)" class="room-number">
+            {{ room.room_number }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-2 ps-md-4">
+    <div
+      class="p-4 hei"
+      style="background-color: #fdc9c9; flex: 1; border-radius: 20px"
+    >
+      <h3 style="text-align: center" class="pb-3"><b>CLEANING ROOM</b></h3>
+      <h2
+        *ngIf="!CLeanRooms || CLeanRooms.length === 0"
+        class="no-room-message"
+      >
+        No room found
+      </h2>
+      <div class="room-grid-engaged">
+        <div *ngFor="let room of CLeanRooms" class="room-container">
+          <p (click)="ChangeRoomStatus(room.room_id)" class="room-number1">
+            {{ room.room_number }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-8 ps-md-4">
+    <div class="back-color p-5 hei">
+      <div class="page-wrapper m-4">
+        <div
+          class="room-detail-container"
+          *ngFor="let category of getCategoryKeys()"
+        >
+          <h2>
+            <b>{{ category }}</b>
+          </h2>
+          <div class="room-grid">
+            <div
+              *ngFor="let room of RoomsByCategory[category]"
+              [ngClass]="{
+                available: room.roomStatus === 'AVAILABLE',
+                engaged: room.roomStatus === 'ENGAGE',
+                cleaning: room.roomStatus === 'CLEAN'
+              }"
+              class="room-detail"
+              (click)="navigateRoom(room.room_number)"
+            >
+              {{ room.room_number }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="room-legend">
+        <div class="m-3">
+          <div style="background-color: red; height: 25px; width: 50px"></div>
+          ENGAGE ROOM
+        </div>
+        <div class="m-3">
+          <div
+            style="background-color: rgb(7, 122, 17); height: 25px; width: 50px"
+          ></div>
+          AVAILABLE ROOM
+        </div>
+        <div class="m-3">
+          <div
+            style="
+              background-color: rgb(255, 238, 0);
+              height: 25px;
+              width: 50px;
+            "
+          ></div>
+          CLEANING ROOM
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
