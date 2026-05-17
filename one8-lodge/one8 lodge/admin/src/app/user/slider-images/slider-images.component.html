@@ -1,0 +1,38 @@
+<div class="navbar">
+    <i class="bi bi-arrow-90deg-left" routerLink="/userDashboardRoute" ></i>
+    <h1> Images Modification </h1>
+    <!-- <button (click)="OpenCustomerContainer()" >View Customers</button>
+    <button (click)="NavigateBookings()" >View Bookings</button> -->
+  </div>
+
+
+<section class="margi">
+  <div class="just">
+    <div class="p-4 back">
+      <div>
+        <input class="mx-auto" type="file" (change)="Onimageselected($event)" #fileInput>
+      </div >
+     <div class="mt-3 text-center"> <button (click)="uploadImage(fileInput)">Upload Image</button></div>
+    </div>
+  </div>
+
+
+
+  <div class="container mt-3">
+    <table>
+      <tr>
+          <!-- <th>Image ID</th> -->
+          <th>Image </th>
+          <th>Action </th>
+      </tr>
+      <tr *ngFor="let image of ImageArray">
+          <!-- <td>{{image.id}}</td> -->
+          <td><img [src]="image.image_link" alt="image"></td>
+          <td><button (click)="deleteImage(image.slider_image_id)">delete</button></td>
+      </tr>
+    </table>
+  </div>
+
+
+
+</section>

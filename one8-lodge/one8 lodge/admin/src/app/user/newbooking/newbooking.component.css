@@ -1,0 +1,189 @@
+
+
+/* Container styling */
+.navbar {
+  display: flex;
+  align-items: center;
+  background-color: #34495e;
+  color: white;
+  padding: 15px;
+  position: relative;    
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 9999;
+}
+
+.wid2{
+  width: 40%;
+}
+
+.NewRoomContainer{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.navbar i {
+  font-size: 24px; /* Adjust the size as needed */
+  margin-right: 15px;
+}
+
+.navbar h1 {
+  flex-grow: 1;
+  text-align: center;
+  margin: 0;
+}
+
+.check{
+  width: unset;
+}
+
+
+
+
+
+/* General styles */
+form {
+    max-width: 800px;
+    margin: 90px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  form div {
+    margin-bottom: 15px;
+  }
+
+
+  .image-container img{
+    
+    height: 200px;
+    width: 300px;
+  }
+
+  .flex{
+    display: flex;
+    overflow-x: scroll;
+    width: 100%;
+  }
+  
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 15px;
+  }
+  
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  input[type="file"] {
+    margin-top: 10px;
+  }
+  
+  input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #218838;
+  }
+  
+  small {
+    color: red;
+    display: block;
+    margin-top: 5px;
+  }
+  
+  /* Form groups */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .form-group div label {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .form-group div input,
+  .form-group div select {
+    flex: 2;
+  }
+  
+  /* Room details */
+  form div[formGroupName="roomDetails"] {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #fff;
+  }
+  
+  /* Payments array */
+  div[formArrayName="payments"] {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #fff;
+  }
+  
+  div[formArrayName="payments"] div {
+    margin-bottom: 10px;
+  }
+  
+  div[formArrayName="payments"] div input,
+  div[formArrayName="payments"] div select {
+    margin-top: 5px;
+  }
+  
+  /* Additional spacing */
+  .margin-top-small {
+    margin-top: 10px;
+  }
+  
+  .margin-top-medium {
+    margin-top: 20px;
+  }
+  
+  .margin-top-large {
+    margin-top: 30px;
+  }
+
+
+
+
+
+
+
+
+  
+  

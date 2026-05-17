@@ -1,0 +1,544 @@
+<div class="navbar">
+  <i class="bi bi-arrow-90deg-left" routerLink="/userRoomRoute"></i>
+  <h1>{{ categoryName }}</h1>
+  <button (click)="ClickAddRoom()">Add Room Type</button>
+</div>
+
+<section class="margi">
+  <div class="NewRoomContainer" *ngIf="AddNewRoomContainer">
+    <span class="closebtn" (click)="closeNav()">&#10005;</span>
+    <form [formGroup]="newRoomForm" (ngSubmit)="AddRoomFunTs()">
+      <div class="form-group">
+        <label for="room_number">Room Number</label>
+        <input
+          id="room_number"
+          type="text"
+          formControlName="room_number"
+          class="form-control"
+        />
+        <div
+          *ngIf="
+            newRoomForm.get('room_number')!.invalid &&
+            (newRoomForm.get('room_number')!.dirty ||
+              newRoomForm.get('room_number')!.touched)
+          "
+          class="text-danger"
+        >
+          Room number is required.
+        </div>
+      </div>
+
+      <div>
+        <label for="description">Description:</label>
+        <input type="text" id="description" formControlName="description" />
+        <div
+          *ngIf="
+            newRoomForm.get('description')?.invalid &&
+            newRoomForm.get('description')?.touched
+          "
+        >
+          <small *ngIf="newRoomForm.get('description')?.errors?.['required']"
+            >Description is required.</small
+          >
+        </div>
+      </div>
+
+      <div *ngIf="!editmode">
+        <label for="file">Upload Files:</label>
+        <input id="file" type="file" (change)="onFileChange($event)" multiple />
+        <div
+          *ngIf="
+            newRoomForm.get('files')?.invalid &&
+            newRoomForm.get('files')?.touched
+          "
+        >
+          <small *ngIf="newRoomForm.get('files')?.errors?.['required']"
+            >files upload is required.</small
+          >
+        </div>
+      </div>
+
+      <div style="display: flex">
+        <div class="priceDiv" formGroupName="nonacPrice">
+          <h4>Non-Ac Price</h4>
+          <div class="form-group">
+            <label for="three_hour">3 Hrs</label>
+            <input
+              id="three_hour"
+              type="text"
+              formControlName="three_hour"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                newRoomForm.get('nonacPrice.three_hour')!.invalid &&
+                (newRoomForm.get('nonacPrice.three_hour')!.dirty ||
+                  newRoomForm.get('nonacPrice.three_hour')!.touched)
+              "
+              class="text-danger"
+            >
+              Valid rate is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="six_hour">6 Hrs</label>
+            <input
+              id="six_hour"
+              type="text"
+              formControlName="six_hour"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                newRoomForm.get('nonacPrice.six_hour')!.invalid &&
+                (newRoomForm.get('nonacPrice.six_hour')!.dirty ||
+                  newRoomForm.get('nonacPrice.six_hour')!.touched)
+              "
+              class="text-danger"
+            >
+              Valid rate is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="nine_hour">9 Hrs</label>
+            <input
+              id="nine_hour"
+              type="text"
+              formControlName="nine_hour"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                newRoomForm.get('nonacPrice.nine_hour')!.invalid &&
+                (newRoomForm.get('nonacPrice.nine_hour')!.dirty ||
+                  newRoomForm.get('nonacPrice.nine_hour')!.touched)
+              "
+              class="text-danger"
+            >
+              Valid rate is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="twelve_hour">12 Hrs</label>
+            <input
+              id="twelve_hour"
+              type="text"
+              formControlName="twelve_hour"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                newRoomForm.get('nonacPrice.twelve_hour')!.invalid &&
+                (newRoomForm.get('nonacPrice.twelve_hour')!.dirty ||
+                  newRoomForm.get('nonacPrice.twelve_hour')!.touched)
+              "
+              class="text-danger"
+            >
+              Valid rate is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="sixteen_hour">16 Hrs</label>
+            <input
+              id="sixteen_hour"
+              type="text"
+              formControlName="sixteen_hour"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                newRoomForm.get('nonacPrice.sixteen_hour')!.invalid &&
+                (newRoomForm.get('nonacPrice.sixteen_hour')!.dirty ||
+                  newRoomForm.get('nonacPrice.sixteen_hour')!.touched)
+              "
+              class="text-danger"
+            >
+              Valid rate is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="twentyfour_hour">24 Hrs</label>
+            <input
+              id="twentyfour_hour"
+              type="text"
+              formControlName="twentyfour_hour"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                newRoomForm.get('nonacPrice.twentyfour_hour')!.invalid &&
+                (newRoomForm.get('nonacPrice.twentyfour_hour')!.dirty ||
+                  newRoomForm.get('nonacPrice.twentyfour_hour')!.touched)
+              "
+              class="text-danger"
+            >
+              Valid rate is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="full_night">Full Night Rate</label>
+            <input
+              id="full_night"
+              type="text"
+              formControlName="full_night"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                newRoomForm.get('nonacPrice.full_night')!.invalid &&
+                (newRoomForm.get('nonacPrice.full_night')!.dirty ||
+                  newRoomForm.get('acPrice.full_night')!.touched)
+              "
+              class="text-danger"
+            >
+              Valid rate is required.
+            </div>
+          </div>
+        </div>
+        <div class="priceDiv" formGroupName="acPrice">
+          <h4>Ac Price</h4>
+          <div class="form-group">
+            <label for="three_hour">3 Hrs</label>
+            <input
+              id="three_hour"
+              type="text"
+              formControlName="three_hour"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                newRoomForm.get('acPrice.three_hour')!.invalid &&
+                (newRoomForm.get('acPrice.three_hour')!.dirty ||
+                  newRoomForm.get('acPrice.three_hour')!.touched)
+              "
+              class="text-danger"
+            >
+              Valid rate is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="six_hour">6 Hrs</label>
+            <input
+              id="six_hour"
+              type="text"
+              formControlName="six_hour"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                newRoomForm.get('acPrice.six_hour')!.invalid &&
+                (newRoomForm.get('acPrice.six_hour')!.dirty ||
+                  newRoomForm.get('acPrice.six_hour')!.touched)
+              "
+              class="text-danger"
+            >
+              Valid rate is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="nine_hour"> 9 Hrs</label>
+            <input
+              id="nine_hour"
+              type="text"
+              formControlName="nine_hour"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                newRoomForm.get('acPrice.nine_hour')!.invalid &&
+                (newRoomForm.get('acPrice.nine_hour')!.dirty ||
+                  newRoomForm.get('acPrice.nine_hour')!.touched)
+              "
+              class="text-danger"
+            >
+              Valid rate is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="twelve_hour">12 Hrs</label>
+            <input
+              id="twelve_hour"
+              type="text"
+              formControlName="twelve_hour"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                newRoomForm.get('acPrice.twelve_hour')!.invalid &&
+                (newRoomForm.get('acPrice.twelve_hour')!.dirty ||
+                  newRoomForm.get('acPrice.twelve_hour')!.touched)
+              "
+              class="text-danger"
+            >
+              Valid rate is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="sixteen_hour">16 Hrs</label>
+            <input
+              id="sixteen_hour"
+              type="text"
+              formControlName="sixteen_hour"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                newRoomForm.get('acPrice.sixteen_hour')!.invalid &&
+                (newRoomForm.get('acPrice.sixteen_hour')!.dirty ||
+                  newRoomForm.get('acPrice.sixteen_hour')!.touched)
+              "
+              class="text-danger"
+            >
+              Valid rate is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="twentyfour_hour">24 Hrs</label>
+            <input
+              id="twentyfour_hour"
+              type="text"
+              formControlName="twentyfour_hour"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                newRoomForm.get('acPrice.twentyfour_hour')!.invalid &&
+                (newRoomForm.get('acPrice.twentyfour_hour')!.dirty ||
+                  newRoomForm.get('acPrice.twentyfour_hour')!.touched)
+              "
+              class="text-danger"
+            >
+              Valid rate is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="full_night">Full Night Rate</label>
+            <input
+              id="full_night"
+              type="text"
+              formControlName="full_night"
+              class="form-control"
+            />
+            <div
+              *ngIf="
+                newRoomForm.get('acPrice.full_night')!.invalid &&
+                (newRoomForm.get('acPrice.full_night')!.dirty ||
+                  newRoomForm.get('acPrice.full_night')!.touched)
+              "
+              class="text-danger"
+            >
+              Valid rate is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="roomStatus">Room Status</label>
+        <select
+          id="roomStatus"
+          formControlName="roomStatus"
+          class="form-control"
+        >
+          <option value="AVAILABLE">AVAILABLE</option>
+          <option value="ENGAGE">ENGAGE</option>
+          <option value="CLEAN">CLEANING</option>
+        </select>
+        <div
+          *ngIf="
+            newRoomForm.get('roomStatus')!.invalid &&
+            (newRoomForm.get('roomStatus')!.dirty ||
+              newRoomForm.get('roomStatus')!.touched)
+          "
+          class="text-danger"
+        >
+          Room status is required.
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="newRoomForm.invalid"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+
+  <section class="just1">
+    <div class="over">
+      <table class="room-details-table">
+        <thead>
+          <tr>
+            <th rowspan="2">Room Number</th>
+            <th rowspan="2">Room Desc</th>
+            <th rowspan="2">Image</th>
+            <th colspan="7">AC Price</th>
+            <th colspan="7">Non-AC Price</th>
+            <th rowspan="2">Status</th>
+            <th rowspan="2">Action</th>
+          </tr>
+          <tr>
+            <th>3 Hrs</th>
+            <th>6 Hrs</th>
+            <th>9 Hrs</th>
+            <th>12 Hrs</th>
+            <th>16 Hrs</th>
+            <th>24 Hrs</th>
+            <th>Full Night</th>
+            <th>3 Hrs</th>
+            <th>6 Hrs</th>
+            <th>9 Hrs</th>
+            <th>12 Hrs</th>
+            <th>16 Hrs</th>
+            <th>24 Hrs</th>
+            <th>Full Night</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="RoomDetailArray.length == 0">
+            <td colspan="17" class="text-center">No record found</td>
+          </tr>
+          <tr *ngFor="let data of RoomDetailArray; let i = index">
+            <td>{{ data.room_number }}</td>
+            <td>{{ data.description }}</td>
+
+            <td>
+              <div class="image-container">
+                <img
+                  *ngFor="let image of data.images"
+                  [src]="image.img_link"
+                  alt="Room Image"
+                />
+                <!-- <input type="file"  (change)="OnImageSelect()"> -->
+                <input
+                  id="file"
+                  type="file"
+                  (change)="OnImageSelect($event, data.room_id)"
+                  multiple
+                />
+                <button
+                  class="bg-danger text-white"
+                  (click)="DeleteImages(data.room_id)"
+                >
+                  Delete
+                </button>
+                <!-- <button (click)="uploadImages()"></button> -->
+              </div>
+            </td>
+            <ng-container *ngIf="data.acPrice; else emptyACPrice">
+              <td>
+                <i class="bi bi-currency-rupee">{{
+                  data.acPrice.three_hour || ""
+                }}</i>
+              </td>
+              <td>
+                <i class="bi bi-currency-rupee">{{
+                  data.acPrice.six_hour || ""
+                }}</i>
+              </td>
+              <td>
+                <i class="bi bi-currency-rupee">{{
+                  data.acPrice.nine_hour || ""
+                }}</i>
+              </td>
+              <td>
+                <i class="bi bi-currency-rupee">{{
+                  data.acPrice.twelve_hour || ""
+                }}</i>
+              </td>
+
+              <td>
+                <i class="bi bi-currency-rupee">{{
+                  data.acPrice.sixteen_hour || ""
+                }}</i>
+              </td>
+              <td>
+                <i class="bi bi-currency-rupee">{{
+                  data.acPrice.twentyfour_hour || ""
+                }}</i>
+              </td>
+              <td>
+                <i class="bi bi-currency-rupee">{{
+                  data.acPrice.full_night || ""
+                }}</i>
+              </td>
+            </ng-container>
+            <ng-template #emptyACPrice>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </ng-template>
+            <ng-container *ngIf="data.nonacPrice; else emptyNonACPrice">
+              <td>
+                <i class="bi bi-currency-rupee">{{
+                  data.nonacPrice.three_hour || ""
+                }}</i>
+              </td>
+              <td>
+                <i class="bi bi-currency-rupee">{{
+                  data.nonacPrice.six_hour || ""
+                }}</i>
+              </td>
+              <td>
+                <i class="bi bi-currency-rupee">{{
+                  data.nonacPrice.nine_hour || ""
+                }}</i>
+              </td>
+              <td>
+                <i class="bi bi-currency-rupee">{{
+                  data.nonacPrice.twelve_hour || ""
+                }}</i>
+              </td>
+              <td>
+                <i class="bi bi-currency-rupee">{{
+                  data.nonacPrice.sixteen_hour || ""
+                }}</i>
+              </td>
+              <td>
+                <i class="bi bi-currency-rupee">{{
+                  data.nonacPrice.twentyfour_hour || ""
+                }}</i>
+              </td>
+              <td>
+                <i class="bi bi-currency-rupee">{{
+                  data.nonacPrice.full_night || ""
+                }}</i>
+              </td>
+            </ng-container>
+            <ng-template #emptyNonACPrice>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </ng-template>
+            <td>{{ data.roomStatus }}</td>
+            <td>
+              <i class="bi bi-pencil-square" (click)="EditRoom(data)"></i>
+              <i class="bi bi-trash3" (click)="DeleteRoom(data.room_id)"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</section>

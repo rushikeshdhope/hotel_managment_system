@@ -1,0 +1,75 @@
+
+<div class="bgimga">
+</div>
+
+<div class="rel">
+  <div>
+    <img src="/assets/png_023.png" alt="" class="img3">
+  </div>
+  <h2 class="abs">Room</h2>
+</div>
+
+<!-- <section class="room-details">
+  <div class="container">
+    <div class="room-grid">
+      <div *ngFor="let room of roomDetails" class="room-detail card">
+        <div class="flex">
+          <img [src]="room.image_link" alt="Room Image" class="gallery-image" (click)="navigateRoomDetail(room.room_id)">
+        </div>
+        <div class="card-body">
+          <h2>Room Number: {{ room.room_number }}</h2>
+          <h3>Status: {{ room.roomStatus }}</h3>
+          <h4>Description: {{ room.description }}</h4>
+          <button (click)="navigateRoomDetail(room.room_id)" class="btn btn-secondary">View Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<div class="image-modal" id="image-modal">
+  <img id="modal-image" />
+</div>
+
+
+
+
+<section #roomTypesSection1 id="room-types-section-1" class="display-xl">
+  <div class="wid">
+    <!-- <h2 class="">Our Rooms</h2> -->
+    <div class="margi">
+      <div *ngFor="let room of roomDetails; let i = index" class="margi1" [ngClass]="{'reverse': i % 2 === 1}">
+        <div data-aos="zoom-in" data-aos-easing="linear" data-aos-duration="1500">
+          <img [src]="room.image_link" alt="Room Image" class="img-1" (click)="navigateRoomDetail(room.room_id)">
+        </div>
+        <div class="card-p">
+          <div class="card">
+            <h2>Room Number: {{ room.room_number }}</h2>
+            <!-- <h3>Status: {{ room.roomStatus }}</h3> -->
+            <h4>Description: {{ room.description }}</h4>
+            <button (click)="navigateRoomDetail(room.room_id)" class="btn btn-secondary">View Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section #roomTypesSection2 id="room-types-section-2" class="room-types display">
+  <div class="container">
+    <!-- <h2 class="" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1500">Our Rooms</h2> -->
+    <div class="room-list">
+      <div *ngFor="let room of roomDetails; let i = index" class="room-item" [ngClass]="{'reverse': i % 2 === 1}">
+        <div class="room-image-container" data-aos="zoom-in" data-aos-easing="linear" data-aos-duration="1500">
+          <img [src]="room.image_link" alt="Room Image" class="room-image" (click)="navigateRoomDetail(room.room_id)">
+        </div>
+        <div class="room-info shadow border p-3 mb-5 bg-body-tertiary rounded" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1500">
+          <h2>Room Number: {{ room.room_number }}</h2>
+          <!-- <h3>Status: {{ room.roomStatus }}</h3> -->
+          <h4>Description: {{ room.description }}</h4>
+          <button (click)="navigateRoomDetail(room.room_id)" class="btn btn-secondary">View Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

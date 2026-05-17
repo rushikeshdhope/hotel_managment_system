@@ -1,0 +1,44 @@
+<section class="background">
+  <h1 class="paddin"><b>Login</b></h1>
+  <div class="center">
+    <form [formGroup]="LoginData" (ngSubmit)="LoginFormSubmit()">
+
+      <div style="display: flex; justify-content: space-around;">
+        <span class="role" (click)="setRole(false)" [ngClass]="{'color': !isAdmin, }"><b>MANAGER</b></span>
+        <span class="role" (click)="setRole(true)" [ngClass]="{'color': isAdmin}"><b>ADMIN</b></span>
+      </div>
+
+      <div>
+        <label for="user_name">USER NAME :</label>
+        <input type="text" id="user_name" placeholder="Enter user name" formControlName="user_name" maxlength="30" />
+        <div *ngIf="
+          LoginData.get('user_name')!.invalid &&
+          LoginData.get('user_name')!.touched
+        " class="ErrorMessage">
+          User Name is required.
+        </div>
+      </div>
+
+      <div>
+        <label for="user_password">PASSWORD:</label>
+        <div style="position: relative;">
+          <input type="password" id="password" maxlength="25" placeholder="Enter password .."
+            formControlName="user_password" />
+
+
+          <span class="glyphicon glyphicon-eye-open" (click)="togglePasswordVisibility()"></span>
+        </div>
+        <div *ngIf="
+          LoginData.get('user_password')!.invalid &&
+          LoginData.get('user_password')!.touched
+        " class="ErrorMessage">
+          password is required.
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="LoginData.invalid">LOGIN</button>
+      <p class="pt-3">OR</p>
+      <a routerLink="/forgotpassroute">Forgot password</a>
+    </form>
+  </div>
+</section>

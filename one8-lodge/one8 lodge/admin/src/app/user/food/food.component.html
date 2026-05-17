@@ -1,0 +1,65 @@
+<div class="navbar">
+  <i class="bi bi-arrow-90deg-left" routerLink="/bookings"></i>
+  <h1>Food Category</h1>
+  <button (click)="ClickAddRoom()">Add Food Category</button>
+</div>
+
+<section class="margi">
+  <div class="NewRoomContainer" *ngIf="AddNewFoodContainer">
+    <input
+      type="text"
+      [(ngModel)]="NewFoodCatName"
+      placeholder="Enter new food type .."
+      pattern="[a-zA-Z]*"
+      maxlength="30"
+    />
+    <div *ngIf="NewFoodCatName && !isValidRoomNewName()" class="text-danger">
+      Only alphabetic characters allowed.
+    </div>
+    <button class="ms-3" (click)="NewRoom()" [disabled]="!isValidRoomNewName()">
+      Save
+    </button>
+  </div>
+
+  <table>
+    <tr>
+      <th>Food ID</th>
+      <th>Food Category</th>
+      <th>Action</th>
+    </tr>
+    <tr *ngIf="FoodArray === null">
+      <td colspan="3" style="text-align: center">No record found</td>
+    </tr>
+    <tr *ngFor="let data of FoodArray; let i = index">
+      <td>{{ data.food_category_id }}</td>
+      <td *ngIf="!editMode || editRowIndex !== i">
+        {{ data.food_category_name }}
+      </td>
+      <td *ngIf="editMode && editRowIndex === i">
+        <input
+          type="text"
+          [(ngModel)]="foodName"
+          pattern="[a-zA-Z]*"
+          maxlength="30"
+        />
+        <div *ngIf="!isValidRoomName()" class="text-danger">
+          Only alphabetic characters allowed.
+        </div>
+        <button (click)="EditRoomName(data)" [disabled]="!isValidRoomName()">
+          Save
+        </button>
+      </td>
+
+      <td>
+        <i
+          class="bi bi-pencil-square"
+          (click)="EditRoom(i, data.food_category_name)"
+        ></i>
+        <i class="bi bi-trash3" (click)="DeleteFood(data.food_category_id)"></i>
+        <a (click)="navigateFoodDetail(data.food_category_id)"
+          >View or details</a
+        >
+      </td>
+    </tr>
+  </table>
+</section>

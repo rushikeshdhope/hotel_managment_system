@@ -1,0 +1,194 @@
+/* Footer Styles */
+.footer {
+  background: #192430;
+  color: #fff;
+  padding: 40px 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.footer .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.footer-section {
+  flex: 1;
+  margin: 20px;
+  min-width: 200px;
+}
+
+.footer-section h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.footer-section p,
+.footer-section ul,
+.footer-section a {
+  color: #bdc3c7;
+  font-size: 14px;
+  line-height: 1.8;
+  text-decoration: none;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-section ul li a:hover {
+  color: #fff;
+}
+
+.footer-section .social-links a {
+  color: #e1601b;
+  margin-right: 30px;
+  font-size: 25px;
+  transition: color 0.3s ease;
+}
+
+.footer-section .social-links a:hover {
+  color: #fff;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid #d5dbdf;
+  margin-top: 20px;
+}
+
+.footer-bottom p {
+  margin: 0;
+  font-size: 14px;
+}
+/* Responsive Styles */
+@media (max-width: 768px) {
+  /* .container{
+    margin-left: 17%;
+  } */
+  .footer .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-section {
+    margin: 10px 0;
+    text-align: center;
+  }
+
+  .footer-section .social-links {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-section {
+    min-width: 100%;
+    margin: 10px 0;
+  }
+
+  .footer-section h2 {
+    font-size: 16px;
+  }
+
+  .footer-section p,
+  .footer-section ul,
+  .footer-section a {
+    font-size: 12px;
+  }
+
+  .footer-section .social-links a {
+    font-size: 20px;
+  }
+}
+
+
+/* From Uiverse.io by roajuan93 */ 
+.card {
+  width: fit-content;
+  height: fit-content;
+  background-color: rgb(238, 238, 238);
+  /* display: flex; */
+  display: -webkit-inline-box;
+  align-items: center;
+  justify-content: center;
+  padding: 25px 25px;
+  gap: 20px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.055);
+}
+
+/* for all social containers*/
+.socialContainer {
+  width: 52px;
+  height: 52px;
+  border-radius: 5px;
+  background-color: rgb(44, 44, 44);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition-duration: 0.3s;
+}
+/* instagram*/
+.containerOne:hover {
+  background-color: #d62976;
+  transition-duration: 0.3s;
+}
+/* Tiktok*/
+.containerTwo:hover {
+  background-color: #25f4ee;
+  transition-duration: 0.3s;
+}
+/* Facebook*/
+.containerThree:hover {
+  background-color: #1877f2;
+  transition-duration: 0.3s;
+}
+/* Whatsapp*/
+.containerFour:hover {
+  background-color: rgb(255, 0, 0);
+  transition-duration: 0.3s;
+}
+
+.socialContainer:active {
+  transform: scale(0.9);
+  transition-duration: 0.3s;
+}
+
+.socialSvg {
+  width: 19px;
+}
+.largeIcon {
+  width: 27px; /* Ancho específico solo para el icono de TikTok */
+}
+.socialSvg path {
+  fill: rgb(255, 255, 255);
+}
+
+.socialContainer:hover .socialSvg {
+  animation: slide-in-top 0.3s both;
+}
+
+@keyframes slide-in-top {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+p{
+  margin-bottom: 0;
+}

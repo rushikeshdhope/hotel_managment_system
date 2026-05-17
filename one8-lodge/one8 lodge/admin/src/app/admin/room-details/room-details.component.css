@@ -1,0 +1,225 @@
+/* Container styling */
+.navbar {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    position: relative;
+}
+
+.NewRoomContainer{
+   
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.navbar i {
+    font-size: 24px; /* Adjust the size as needed */
+    margin-right: 15px;
+}
+
+.navbar h1 {
+    flex-grow: 1;
+    text-align: center;
+    margin: 0;
+}
+
+/* Table styling */
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+    color: #333;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Input field styling */
+input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(50% - 20px);
+}
+.NewRoomContainer input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(30% - 20px);
+}
+
+input[type="text"]:focus {
+    border-color: #66afe9;
+    outline: none;
+}
+
+/* Save button styling */
+button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #5cb85c;
+    color: white;
+    cursor: pointer;
+   
+}
+
+button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Edit and delete icons */
+i {
+    cursor: pointer;
+    margin: 0 8px;
+}
+
+i:hover {
+    color: #007bff;
+}
+
+/* Validation message */
+.text-danger {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    table {
+        width: 100%;
+    }
+    
+    th, td {
+        padding: 8px;
+        font-size: 14px;
+    }
+    
+    button {
+        width: 100%;
+    }
+}
+
+
+
+
+
+
+/* insert form */
+
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #2c3e50;
+    color: white;
+}
+
+.navbar i {
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.navbar h1 {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.navbar button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.navbar button:hover {
+    background-color: #2980b9;
+}
+
+.NewRoomContainer {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 333px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.NewRoomContainer form {
+    display: flex;
+    flex-direction: column;
+}
+
+.NewRoomContainer label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.NewRoomContainer input[type="text"],
+.NewRoomContainer input[type="number"],
+.NewRoomContainer select {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 100%;
+    height: 37px;
+}
+
+.NewRoomContainer input[type="checkbox"] {
+    margin-bottom: 10px;
+}
+
+.NewRoomContainer .ErrorMessage {
+    color: red;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.NewRoomContainer button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-end;
+}
+
+.NewRoomContainer button:hover {
+    background-color: #2980b9;
+}
+
+
+.closebtn{
+    cursor: pointer;
+    display: flex;
+    justify-content: end;
+}

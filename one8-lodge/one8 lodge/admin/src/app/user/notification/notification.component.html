@@ -1,0 +1,23 @@
+<div class="navbar">
+  <i class="bi bi-arrow-90deg-left" routerLink="/userDashboardRoute"></i>
+  <h1>NOTIFICATIONS</h1>
+</div>
+
+<section class="px-4 margi">
+  <div class="row">
+    <div
+      *ngFor="let noti of NotificationArray"
+      class="col-12 col-md-6 col-lg-3"
+    >
+      <div class="m-3 notification">
+        <p class="message">{{ noti.message }}</p>
+        <p class="time">{{ noti.creation_time }}</p>
+        <div class="text-end">
+          <button class="px-5 py-2" (click)="NotificationClick(noti)">
+            view
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

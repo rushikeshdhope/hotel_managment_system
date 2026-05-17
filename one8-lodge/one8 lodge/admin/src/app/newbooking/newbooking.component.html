@@ -1,0 +1,154 @@
+<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+  <!-- Customer Details -->
+  <div class="margin-top-medium">
+    
+      <label>Date:</label>
+      <input formControlName="date" type="date">
+      <div *ngIf="bookingForm.get('date')?.invalid && (bookingForm.get('date')?.dirty || bookingForm.get('date')?.touched)">
+        <small *ngIf="bookingForm.get('date')?.errors?.['required']">Date is required.</small>
+      </div>
+    </div>
+  
+    <div>
+      <label>Booking Date:</label>
+      <input formControlName="bookingDate" type="date">
+      <div *ngIf="bookingForm.get('bookingDate')?.invalid && (bookingForm.get('bookingDate')?.dirty || bookingForm.get('bookingDate')?.touched)">
+        <small *ngIf="bookingForm.get('bookingDate')?.errors?.['required']">Booking Date is required.</small>
+      </div>
+    </div>
+
+  <div>
+    <label> Customer Name:</label>
+    <input formControlName="customer_name" placeholder="Customer Name">
+    <div *ngIf="bookingForm.get('customer_name')?.invalid && (bookingForm.get('customer_name')?.dirty || bookingForm.get('customer_name')?.touched)">
+      <small *ngIf="bookingForm.get('customer_name')?.errors?.['required']">Customer Name is required.</small>
+    </div>
+  </div>
+
+  <div>
+    <label>Phone Number:</label>
+    <input formControlName="customer_mobile" placeholder="Customer Mobile">
+    <div *ngIf="bookingForm.get('customer_mobile')?.invalid && (bookingForm.get('customer_mobile')?.dirty || bookingForm.get('customer_mobile')?.touched)">
+      <small *ngIf="bookingForm.get('customer_mobile')?.errors?.['required']">Customer Mobile is required.</small>
+      <small *ngIf="bookingForm.get('customer_mobile')?.errors?.['pattern']">Invalid mobile number.</small>
+    </div>
+  </div>
+
+  <div>
+    <label for="identity_type">Identity Type:</label>
+    <select formControlName="identity_type" id="identity_type">
+      <option value="" disabled>Select an identity type</option>
+      <option value="ADHARCARD">Aadhaar Card</option>
+      <option value="PANCARD">Pancard</option>
+      <option value="DRIVING_LICENCE">Driving Licence</option>
+    </select>
+    <div *ngIf="bookingForm.get('identity_type')?.invalid && (bookingForm.get('identity_type')?.dirty || bookingForm.get('identity_type')?.touched)">
+      <small *ngIf="bookingForm.get('identity_type')?.errors?.['required']">Identity Type is required.</small>
+    </div>
+  </div>
+
+  <div>
+    <label>Customer File:</label>
+    <input type="file" (change)="onFileChange($event, 'customerFile')" multiple>
+  </div>
+
+  <div formGroupName="relatedCustomer">
+    <label>Second Person Name:</label>
+    <input formControlName="name" placeholder="Related Customer Name">
+    <div *ngIf="bookingForm.get('relatedCustomer')?.get('name')?.invalid && (bookingForm.get('relatedCustomer')?.get('name')?.dirty || bookingForm.get('relatedCustomer')?.get('name')?.touched)">
+      <small *ngIf="bookingForm.get('relatedCustomer')?.get('name')?.errors?.['required']">Related Customer Name is required.</small>
+    </div>
+    <label for="idenetityType">Identity Type:</label>
+    <select formControlName="idenetityType" id="idenetityType">
+      <option value="" disabled>Select an identity type</option>
+      <option value="ADHARCARD">Aadhaar Card</option>
+      <option value="PANCARD">Pancard</option>
+      <option value="DRIVING_LICENCE">Driving Licence</option>
+    </select>
+    <div *ngIf="bookingForm.get('relatedCustomer')?.get('idenetityType')?.invalid && (bookingForm.get('relatedCustomer')?.get('idenetityType')?.dirty || bookingForm.get('relatedCustomer')?.get('idenetityType')?.touched)">
+      <small *ngIf="bookingForm.get('relatedCustomer')?.get('idenetityType')?.errors?.['required']">Related Customer Identity Type is required.</small>
+    </div>
+  </div>
+
+  <div>
+    <label>Second Person file</label>
+    <input type="file" (change)="onFileChange($event, 'relatedFile')" multiple>
+  </div>
+
+  <div>
+    <label>In Time:</label>
+    <input formControlName="intime" type="time">
+    <div *ngIf="bookingForm.get('intime')?.invalid && (bookingForm.get('intime')?.dirty || bookingForm.get('intime')?.touched)">
+      <small *ngIf="bookingForm.get('intime')?.errors?.['required']">In Time is required.</small>
+    </div>
+  </div>
+  
+  <div>
+    <label>Out Time:</label>
+    <input formControlName="outtime" type="time">
+    <div *ngIf="bookingForm.get('outtime')?.invalid && (bookingForm.get('outtime')?.dirty || bookingForm.get('outtime')?.touched)">
+      <small *ngIf="bookingForm.get('outtime')?.errors?.['required']">Out Time is required.</small>
+    </div>
+  </div>
+
+  <!-- Room Details -->
+  <div formGroupName="roomDetails">
+    <label>Room Number:</label>
+    <select id="room_number" formControlName="room_number" class="form-control" (change)="onRoomChange()">
+      <option *ngFor="let data of RoomDetailArray" [ngValue]="data.room_number">{{data.room_number}}</option>
+    </select>
+    <div *ngIf="bookingForm.get('roomDetails')?.get('room_number')?.invalid && (bookingForm.get('roomDetails')?.get('room_number')?.dirty || bookingForm.get('roomDetails')?.get('room_number')?.touched)">
+      <small *ngIf="bookingForm.get('roomDetails')?.get('room_number')?.errors?.['required']">Room Number is required.</small>
+    </div>
+
+    <label for="duration">Select hour:</label>
+    <select id="duration" formControlName="duration" class="form-control" (change)="onDurationChange()">
+      <option value="" disabled>Select hour</option>
+      <option value="three_hour">three_hour</option>
+      <option value="six_hour">six_hour</option>
+      <option value="twelve_hour">twelve_hour</option>
+      <option value="sixteen_hour">sixteen_hour</option>
+      <option value="twentyfour_hour">twentyfour_hour</option>
+      <option value="full_night">full_night</option>
+    </select>
+    <div *ngIf="bookingForm.get('roomDetails')?.get('duration')?.invalid && (bookingForm.get('roomDetails')?.get('duration')?.dirty || bookingForm.get('roomDetails')?.get('duration')?.touched)">
+      <small *ngIf="bookingForm.get('roomDetails')?.get('duration')?.errors?.['required']">Duration is required.</small>
+    </div>
+
+    <label>AC:</label>
+    <input formControlName="is_ac" type="checkbox" (change)="onAcChange()">
+
+    <label>Amount:</label>
+    <input formControlName="amount" readonly>
+    <div *ngIf="bookingForm.get('roomDetails')?.get('amount')?.invalid && (bookingForm.get('roomDetails')?.get('amount')?.dirty || bookingForm.get('roomDetails')?.get('amount')?.touched)">
+      <small *ngIf="bookingForm.get('roomDetails')?.get('amount')?.errors?.['required']">Amount is required.</small>
+    </div>
+  </div>
+
+  <div>
+    <label>Remark :</label>
+    <input formControlName="remark" placeholder="Remark">
+  </div>
+
+  <!-- Payments Array -->
+  <div formArrayName="payments">
+    <div *ngFor="let payment of payments.controls; let i = index" [formGroupName]="i">
+      <label>Amount</label>
+      <input formControlName="amount" placeholder="Payment Amount">
+      <div *ngIf="payment.get('amount')?.invalid && (payment.get('amount')?.dirty || payment.get('amount')?.touched)">
+        <small *ngIf="payment.get('amount')?.errors?.['required']">Payment Amount is required.</small>
+      </div>
+      <label for="type">Payment Type:</label>
+      <select formControlName="type" id="type">
+        <option value="" disabled>Select a payment type</option>
+        <option value="ONLINE">Online</option>
+        <option value="CASH">Cash</option>
+      </select>
+      <div *ngIf="payment.get('type')?.invalid && (payment.get('type')?.dirty || payment.get('type')?.touched)">
+        <small *ngIf="payment.get('type')?.errors?.['required']">Payment Type is required.</small>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>

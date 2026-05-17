@@ -1,0 +1,133 @@
+<div class="container">
+  <h2>Customer Registration</h2>
+  <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="customerName">Name:</label>
+      <input id="customerName" formControlName="customer_name" type="text" placeholder="Enter your name" required
+        maxlength="35" (input)="validateInput($event)">
+      <div *ngIf="customerForm.get('customer_name')?.invalid && customerForm.get('customer_name')?.touched">
+        <small class="error">Name is required.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="customerMobile">Mobile:</label>
+      <input id="customerMobile" formControlName="customer_mobile" type="text" maxlength="10"
+        placeholder="Enter your mobile number" (input)="validateNumber($event)">
+      <div *ngIf="customerForm.get('customer_mobile')?.invalid && customerForm.get('customer_mobile')?.touched">
+        <small class="error">Valid mobile number is required.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="customerEmail">Email:</label>
+      <input id="customerEmail" formControlName="customer_email" type="email" placeholder="Enter your email"
+        (input)="validateEmail($event)">
+      <div *ngIf="customerForm.get('customer_email')?.invalid && customerForm.get('customer_email')?.touched">
+        <small class="error">Valid email is required.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="dob">Date of Birth:</label>
+      <input id="dob" formControlName="dob" type="date" placeholder="Enter your date of birth" required>
+      <div *ngIf="customerForm.get('dob')?.invalid && customerForm.get('dob')?.touched">
+        <small class="error">Date of Birth is required.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="identityType">Identity Type:</label>
+      <input id="identityType" formControlName="identity_type" type="text" placeholder="Enter your identity type">
+      <div *ngIf="customerForm.get('identity_type')?.invalid && customerForm.get('identity_type')?.touched">
+        <small class="error">Identity type is required.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="idenetityNumber">Identity Number:</label>
+      <input id="idenetityNumber" formControlName="idenetity_number" type="text"
+        placeholder="Enter your identity number">
+      <div *ngIf="customerForm.get('idenetity_number')?.invalid && customerForm.get('idenetity_number')?.touched">
+        <small class="error">Identity number is required.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <div class="password-container">
+        <input id="password" formControlName="password" [type]="showPassword ? 'text' : 'password'"
+          placeholder="Enter your password" (input)="validatePassword($event)">
+        <button type="button" (click)="togglePasswordVisibility()">
+          <i [ngClass]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+        </button>
+      </div>
+      <div *ngIf="customerForm.get('password')?.invalid && customerForm.get('password')?.touched">
+        <small class="error">Password is required.</small>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <div formGroupName="addresses">
+        <div class="form-group">
+          <label for="line1">Address Line 1:</label>
+          <input id="line1" formControlName="line1" type="text" placeholder="Enter address line 1"
+            (input)="validateInputAlphaNum($event)">
+          <div *ngIf="customerForm.get('addresses.line1')?.invalid && customerForm.get('addresses.line1')?.touched">
+            <small class="error">Address Line 1 is required.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="city">City:</label>
+          <input id="city" formControlName="city" type="text" placeholder="Enter your city"
+            (input)="validateInputCity($event)">
+          <div *ngIf="customerForm.get('addresses.city')?.invalid && customerForm.get('addresses.city')?.touched">
+            <small class="error">City is required.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="state">State:</label>
+          <input id="state" formControlName="state" type="text" placeholder="Enter your state"
+            (input)="validateInputState($event)">
+          <div *ngIf="customerForm.get('addresses.state')?.invalid && customerForm.get('addresses.state')?.touched">
+            <small class="error">State is required.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="country">Country:</label>
+          <input id="country" formControlName="country" type="text" placeholder="Enter your country"
+            (input)="validateInputCountry($event)">
+          <div *ngIf="customerForm.get('addresses.country')?.invalid && customerForm.get('addresses.country')?.touched">
+            <small class="error">Country is required.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="pincode">Pincode:</label>
+          <input id="pincode" formControlName="pincode" type="text" placeholder="Enter your pincode"
+            (input)="validatePincode($event)" maxlength="6">
+          <div *ngIf="customerForm.get('addresses.pincode')?.invalid && customerForm.get('addresses.pincode')?.touched">
+            <small class="error">Pincode is required.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="file">Upload File:</label>
+      <input id="file" type="file" (change)="onFileChange($event)">
+      <div *ngIf="!selectedFile && customerForm.get('file')?.touched">
+        <small class="error">File is required.</small>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="customerForm.invalid">Submit</button>
+  </form>
+  <div class="login-link">
+    <label>Already Have an Account? <u class="text-primary" routerLink="/login-user">Log In</u>.</label>
+  </div>
+</div>
